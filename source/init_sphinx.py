@@ -8,4 +8,4 @@ title = 'Sphinx and RST syntax guide'
 
 #sphinx related
 user_theme = 'software'
-sphinx_themes_path = ['~/Work/sphinx_themes']
+sphinx_themes_path = ['/home/cokelaer//Work/sphinx_themes']

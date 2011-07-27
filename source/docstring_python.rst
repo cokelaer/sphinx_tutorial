@@ -1,3 +1,6 @@
+.. _docstring_python:
+
+
 How to document your Python docstrings
 #######################################
 

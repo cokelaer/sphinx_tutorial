@@ -4,6 +4,8 @@
 
 In the `Sphinx Overview`_, :ref:`introduction` and :ref:`quickstart` provides the tools to start your own Sphinx project. If you want to see the RST and Sphinx syntax, jump directly to the :ref:`rst_tutorial` section.
 
+Finally, if you are using Sphinx to document a Python project, have a look at the sections :ref:`docstring_python` and :ref:`doctest`.
+
 Sphinx Overview
 ################
 

@@ -1,3 +1,7 @@
+.. _doctest:
+
+
+
 How to include test in your Python docstrings
 ==============================================
 
