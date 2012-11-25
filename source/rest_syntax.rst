@@ -11,53 +11,46 @@ Restructured Text (reST) and Sphinx CheatSheet
     This page describes some of the RST and Sphinx syntax. It is based on resource found at `Sphinx <http://sphinx.pocoo.org/rest.html>`_ , `Docutils <http://docutils.sourceforge.net/rst.html>`_ and more generally software documentation written with Sphinx. 
 
 
+    This is not an exhaustive description but it should allow you to start and create already nice documentation.
+
+
     :Date: |today|
     :Author: **Thomas Cokelaer**
 
 
 .. contents:: 
-    :depth: 2
+    :depth: 3
 
 
 Introduction
-============
+#############
 
 The reStructuredText (RST) syntax provides an easy-to-read, what-you-see-is-what-you-get plaintext markup syntax and parser system. However, you need to be very precise and stick to some strict rules: 
 
     * like Python, RST syntax is sensitive to indentation !
     * RST requires blank lines between paragraphs
 
-This entire document is written with the RST syntax. At the bottom of the right sidebar, you should find a link to the source, which is a good starting point. 
+This entire document is written with the RST syntax. In the right sidebar, you should find a link **show source**, which shows the RST source code.
 
+Text Formatting
+#################
 
 Inline markup and special characters (e.g., bold, italic, verbatim)
-=====================================================================
+====================================================================
 
-The ``*`` is a special character used to defined bold and italic text:
+There are a few special characters used to format text. The special character ``*`` is used to defined bold and italic text as shown in the table below. The backquote character ````` is another special character used to create links to internal or external web pages as you will see in section `Internal and External Links`_.
 
-=============== ====================
-syntax          HTML rendering
-=============== ====================
-`*italic*`      *italic*
-`**italic**`    **bold**
-=============== ====================
+=========== ================================== ==============================
+usage          syntax                           HTML rendering
+=========== ================================== ==============================
+italic      `*italic*`                         *italic*
+bold        `**bold**`                         **bold**
+link        ```python <www.python.org>`_``     `python <www.python.org>`_
+verbatim    ````*````                               ``*``
+=========== ================================== ==============================
 
-The backquote ````` is another special character. For instance, it is used to create links to external web pages, as you will see in section `Internal and External Links`_:
-
-.. code-block:: rest
-
-    `My home page <your-prefered-page.info>`_
-
-
-The double backquote is used to enter in verbatim mode. The escaping character in RST is indeed the double quote.
-
-=============== ====================
-syntax          HTML rendering
-=============== ====================
-````**````      ``**``
-=============== ====================
-
-Here are some restrictions about the ``*`` and `````` syntax. They
+The double backquote is used to enter in verbatim mode, which can be used as the escaping character.
+There are some restrictions about the ``*`` and `````` syntax. They
 
     * cannot not be nested,
     * content may not start or end with whitespace: ``* text*`` is wrong,
@@ -84,7 +77,7 @@ Python string                         Typical result
 Headings 
 ==========
 
-In order to write a title, you can either underline it or under and overline it:
+In order to write a title, you can either underline it or under and overline it. The following examples are correct titles. 
 
 .. code-block:: rest
 
@@ -96,7 +89,7 @@ In order to write a title, you can either underline it or under and overline it:
     ########
 
     subsubtitle
-    ***********
+    **********************
     and so on
 
 Two rules: 
@@ -207,13 +200,106 @@ gives:
 
 .. note:: if two lists are separated by a blanck line only, then the two lists are not differentiated as you can see above.
 
+
+What are directives
+############################
+
+Sphinx and the RST syntax provides directives to include formatted text. As an example, let us consider the **code-block** syntax. It allows to insert code (here HTML) within your document::
+
+    .. code-block:: html
+        :linenos:
+
+        <h1>code block example</h1>
+
+Its rendering is:
+
+.. code-block:: html
+    :linenos:
+
+     <h1>code block example</h1>
+
+Here, **code-block** is the name of the directive. **html** is an argument telling that the code is in HTML format, **lineos** is an option telling to insert line number and finally after a blank line is the text to include.
+
+Note that options are tabulated.
+
+Inserting code and Literal blocks
+#######################################
+
+How to include simple code
+===================================
+
+This easiest way to insert literal code blocks is to end a paragraph with the special marker made of a double coulumn `::`. Then, the literal block must be indented:: 
+
+    This is a simple example::
+
+        import math
+        print 'import done'
+    
+or::
+
+    This is a simple example:
+    ::
+
+        import math
+        print 'import done'
+
+gives:
+
+This is a simple example::
+
+    import math
+    print 'import done' 
+
+
+code-block directive
+===================================
+
+By default the syntax of the language is Python, but you can specify the language using the **code-block** directive as follows::
+
+    .. code-block:: html
+       :linenos:
+
+       <h1>code block example</h1>
+
+produces
+
+.. code-block:: html
+    :linenos:
+
+    <h1>code block example</h1>
+
+Include code with the literalinclude directive
+======================================================
+
+Then, it is also possible to include the contents of a file as follows:
+
+.. code-block:: rest
+
+    .. literalinclude:: filename
+        :linenos:
+        :language: python
+        :lines: 1, 3-5
+        :start-after: 3
+        :end-before: 5
+
+For instance, the ``sample.py`` file contents can be printed:
+
+.. literalinclude:: sample.py
+    :linenos:
+    :language: python
+
+
+
 Tables
-======
+######
 
 There are several ways to write tables. Use standard reStructuredText tables as explained here. They work fine in HTML output, however, there are some gotchas when using tables for LaTeX output.
 
+The rendering of the table depends on the CSS/HTML style, not on sphinx itself.
+
+
 Simple tables
----------------
+================
 
 
 Simple tables can be written as follows::
@@ -244,7 +330,7 @@ This syntax is quite limited, especially for multi cells/columns.
 
 
 Multicells tables, first method
----------------------------------
+====================================
 A first method is the following syntax::
 
         +------------+------------+-----------+
@@ -276,7 +362,7 @@ gives:
     +------------+------------+-----------+
 
 Multicells table, second method
-----------------------------------
+====================================
 The previous syntax can be simplified::
 
     =====  =====  ======
@@ -304,7 +390,7 @@ gives:
 .. note:: table and latex documents are not yet compatible in sphinx, and you should therefore precede them with the a special directive (.. htmlonly::)
 
 The tabularcolumns directive
------------------------------
+=================================
 
 The previous examples work fine in HTML output, however there are some gotchas when using tables in LaTeX: the column width is hard to determine correctly automatically. For this reason, the following directive exists::
 
@@ -335,7 +421,7 @@ gives
     +--------------+------------+-----------+
 
 The csv-table directive
--------------------------
+==========================================
 Finally, a convenient way to create table is the usage of CSV-like syntax::
 
 
@@ -346,6 +432,9 @@ Finally, a convenient way to create table is the usage of CSV-like syntax::
        "Smith", "John", 40
        "Smith", "John, Junior", 20
 
+that is rendered as follows:
+
+
 .. csv-table:: a title
    :header: "name", "firstname", "age"
    :widths: 20, 20, 10
@@ -354,8 +443,9 @@ Finally, a convenient way to create table is the usage of CSV-like syntax::
    "Smith", "John, Junior", 20
 
 
+
 Include other RST files with the toctree directive
-==================================================
+#####################################################
 
 Sooner or later you will want to structure your project documentation by having several RST files. The **toctree** directive allows you to insert other files within a RST file. The reason to use this directive is that RST does not have facilities to interconnect several documents, or split documents into multiple output files. The **toctree** directive looks like
 
@@ -372,14 +462,15 @@ Sooner or later you will want to structure your project documentation by having 
         chapter1.rst
         chapter2.rst
 
+It includes 3 RST files and shows a TOC that includes the title found in the RST documents.
 
-Extension are optional. Here are a few notes about the different options
+Here are a few notes about the different options
 
 * **maxdepth** is used to indicates the depth of the tree.
-* **numbered** add relevant section numbers.
-* **titlesonly** add only the main title of each document
-* **glob** can be used to glob specific patterns
-* **hidden** hides the toctree. Could be useful to indicate the hierarchy to sphinx without including the links.
+* **numbered** adds relevant section numbers.
+* **titlesonly** adds only the main title of each document
+* **glob** can be used to indicate that * and ? characters are used to indicate patterns.
+* **hidden** hides the toctree. It can be used to include files that do not need to be shown (e.g. a bibliography). 
 
 
 The glob option works as follows:
@@ -406,153 +497,20 @@ So that the title of this section is more meaningful.
 
 
 
-Comments
-====================
-
-Comments can be made by adding two dots at the beginning of a line as follows::
-
-    .. comments
-
-
-Substitutions
-==============
-Substitutions  are defined as follows::
-
-    .. _Python: http://www.python.org/
-
-and to refer to it, use the same syntax as for the internal links: just insert hte alias in the text (e.g., ``Python_``,  which appears as Python_ ).
-
-A second method is as follows::
-
-    .. |longtext| replace:: this is a very very long text to include
-
-and then insert  ``|longtext|`` wherever required.
  
-Colored boxes: note, seealso, todo and warnings
-=================================================
+Python software
+############################
 
-There are simple directives like **seealso** that creates nice colored boxes:
-
-.. seealso:: This is a simple **seealso** note. 
-
-created using::
-
-    .. seealso:: This is a simple **seealso** note. 
-
-You have also the **note** and **warning** directives that work identically:
-
-.. note::  This is a **note** box.
-
-.. warning:: note the space between the directive and the text
-
-
-There is another nice directive with the **todo** one but it requires to add `sphinx.ext.todo` extension in the **conf.py** file and these two lines of code::
-
-    [extensions]
-    todo_include_todos=True
-
-.. todo:: a todo box
-
-Inserting code and Literal blocks
-===================================
-
-How to include simple code
------------------------------
-
-Literal code blocks are introduced by ending a paragraph with the special marker (double coulumn) `::`. The literal block must be indented:: 
-
-    This is a simple example::
-
-        import math
-        print 'import done'
-    
-and::
-
-    This is a simple example:
-    ::
-
-        import math
-        print 'import done'
-
-gives:
-
-This is a simple example::
-
-    import math
-    print 'import done' 
-
-
-code-block
-------------
-
-By default the syntax of the language is Python, but you can specify the language using the **code-block** directive as follows::
-
-    .. code-block:: html
-       :linenos:
-
-       <h1>code block example</h1>
-
-produces
-
-.. code-block:: html
-    :linenos:
-
-    <h1>code block example</h1>
-
-Include code with the literalinclude directive
------------------------------------------------
-
-Then, it is also possible to include the contents of a file as follows:
-
-.. code-block:: rest
-
-    .. literalinclude:: filename
-        :linenos:
-        :language: python
-        :lines: 1, 3-5
-        :start-after: 3
-        :end-before: 5
-
-For instance, the ``test.py`` file contents can be printed:
-
-.. literalinclude:: test.py
-    :linenos:
-    :language: python
-
-
-Maths and Equations with LaTeX
-==============================
-
-In order to include equations or simple Latex code in the text (e.g., :math:`\alpha \leq \beta` ) use the following code::
-
-     :math:`\alpha > \beta`  
-
-
-.. warning:: 
-    The *math* markup can be used within RST files (to be parsed by Sphinx) but within your python's docstring, the slashes need to be escaped ! ``:math:`\alpha``` should therefore be written ``:math:`\\alpha``` or put an "r" before the docstring  
-
-Note also, that you can easily include more complex mathematical expressions using the math directive::
-
-    .. math::
-
-        n_{\mathrm{offset}} = \sum_{k=0}^{N-1} s_k n_k
-
-.. math:: n_{\mathrm{offset}} = \sum_{k=0}^{N-1} s_k n_k
-
-It seems that there is no limitations to LaTeX usage:
-
-.. math:: 
-
-   s_k^{\mathrm{column}} = \prod_{j=0}^{k-1} d_j , \quad  s_k^{\mathrm{row}} = \prod_{j=k+1}^{N-1} d_j .
+Sphinx can be used to create generic documentation, or software documentation dedicated to Python, but not only (can C, C++, ...). Here, we'll focus on Python itself.
 
 
 
 Auto-document your python code
 ==============================
 
-Let us suppose you have a python file called *test.py* with a function called *square*. The function's code is :
+Let us suppose you have a python file called *sample.py* with a function called *square*. The function's code is :
 
-.. literalinclude:: test.py
+.. literalinclude:: sample.py
     :linenos:
     :language: python
     :lines: 5-15
@@ -561,36 +519,55 @@ Using the **autofunction** :
 
 .. code-block:: rest
 
-    .. currentmodule:: test
+    .. currentmodule:: sample
     .. autofunction:: square
 
 Gives
 
-.. currentmodule:: test
+.. currentmodule:: sample
 .. autofunction:: square
 
-Here, we need to specify in which module should be found the function **square**, hence the ``.. module::test`` directive. You can use **autoclass** and **automodule** in the same way. 
 
 
-Using the **module** directive also creates an index (see top right of this page) so it is worth specifying mode information using platform and synopsis options:
+
+Here, we need to specify in which module should be found the function **square**, hence the ``.. module::sample`` directive. You can use **autoclass** and **automodule** in the same way. 
+
+
+Using the **module** directive also creates an index (see top right of this page) so it is worth specifying more information using platform and synopsis options for example:
 
 .. code-block:: rest
 
-    .. module:: test
+    .. module:: sample
         :platform: Unix, Windows
         :synopsis: sample of documented python code
 
-The rendering is:
+The results will be shown in a module section (link in top right panel).
 
-.. module:: test
+.. module:: sample
     :platform: Unix, Windows
     :synopsis: sample of documented python code
+
 
 .. note:: the directive module should be use only once for a given module.
 
 .. warning:: the python code must be in the PYTHONPATH.
 
 .. seealso:: http://sphinx.pocoo.org/markup/desc.html
+
+python docstrings
+=====================
+
+In a python shell, when you type a statement, it is preceeded by the >>> sign.
+The results are printed without it. For instance::
+
+    >>> a = 1
+    1
+
+
+If you want to copy and paste this code, you will get errors since the >>> sign is not part of the syntax. There is a javascript solution to hide it in the `Useful extensions`_ section.
+
+Images and figures
+#######################
 
 Include Images
 ===============
@@ -649,6 +626,43 @@ gives
 
         import image 
 
+The option **figclass** is a CSS class that can be tuned for the final HTML rendering.
+
+
+Boxes
+#################
+
+Colored boxes: note, seealso, todo and warnings
+=================================================
+
+There are simple directives like **seealso** that creates nice colored boxes:
+
+.. seealso:: This is a simple **seealso** note. 
+
+created using::
+
+    .. seealso:: This is a simple **seealso** note. 
+
+You have also the **note** directive:
+
+.. note::  This is a **note** box.
+
+with ::
+
+    .. note::  This is a **note** box.
+
+and the warning directive:
+
+.. warning:: note the space between the directive and the text
+
+generated with::
+
+    .. warning:: note the space between the directive and the text
+
+
+There is another  **todo** directive but requires an extension. See 
+`Useful extensions`_
+
 
 Topic directive
 ===============
@@ -675,12 +689,13 @@ Sidebar directive
 
 It is possible to create sidebar using the following code::
 
-  .. sidebar:: Sidebar Title
-          :subtitle: Optional Sidebar Subtitle
+    .. sidebar:: Sidebar Title
+        :subtitle: Optional Sidebar Subtitle
 
-     Subsequent indented lines comprise
-     the body of the sidebar, and are
-     interpreted as body elements.
+        Subsequent indented lines comprise
+        the body of the sidebar, and are
+        interpreted as body elements.
+
 
 .. sidebar:: Sidebar Title
     :subtitle: Optional Sidebar Subtitle
@@ -689,7 +704,32 @@ It is possible to create sidebar using the following code::
     the body of the sidebar, and are
     interpreted as body elements.
 
-Other directives:: glossary, centered, index, download and field list
+Others
+#########
+
+Comments
+====================
+
+Comments can be made by adding two dots at the beginning of a line as follows::
+
+    .. comments
+
+
+Substitutions
+==============
+Substitutions  are defined as follows::
+
+    .. _Python: http://www.python.org/
+
+and to refer to it, use the same syntax as for the internal links: just insert the alias in the text (e.g., ``Python_``,  which appears as Python_ ).
+
+A second method is as follows::
+
+    .. |longtext| replace:: this is a very very long text to include
+
+and then insert  ``|longtext|`` wherever required.
+
+glossary, centered, index, download and field list
 =====================================================================
 
 Field list
@@ -730,13 +770,15 @@ download
 
 ::
 
-    :download:`download test.py <test.py>`
+    :download:`download samplet.py <sample.py>`
 
-gives :download:`download test.py <test.py>`
+gives :download:`download sample.py <sample.py>`
 
 
 hlist directive
 ------------------
+
+hlist can be use to set a list on several columns.
 
 .. rst:directive:: .. hlist::
 
@@ -835,6 +877,8 @@ when using the following syntax::
 
 some special keywords are recognised. For instance, *orphan*, *nocomments*, *tocdepth*.
 
+An example of rendering is the toctree of top of this page.
+
 orphan
 -------
 
@@ -890,6 +934,100 @@ contents directives
 .. |longtext| replace:: this is a longish text to include within a table and which is longer than the width of the column.
 
 
+
+
+Useful extensions
+#########################
+
+In the special file called **conf.py**, there is a variable called **extensions**. You can add extension in this variable. For instance::
+
+
+    extensions = [-
+        'easydev.copybutton',
+        'sphinx.ext.autodoc',
+        'sphinx.ext.autosummary',
+        'sphinx.ext.coverage',
+        'sphinx.ext.graphviz',
+        'sphinx.ext.doctest',
+        'sphinx.ext.intersphinx',
+        'sphinx.ext.todo',
+        'sphinx.ext.coverage',
+        'sphinx.ext.pngmath',
+        'sphinx.ext.ifconfig',
+        'matplotlib.sphinxext.only_directives',
+        'matplotlib.sphinxext.plot_directive',
+     ]
+
+
+
+pngmath: Maths and Equations with LaTeX
+============================================
+
+The extension to be added is the pngmath from sphinx::
+
+        extensions.append('sphinx.ext.pngmath')
+
+In order to include equations or simple Latex code in the text (e.g., :math:`\alpha \leq \beta` ) use the following code::
+
+     :math:`\alpha > \beta`  
+
+
+.. warning:: 
+    The *math* markup can be used within RST files (to be parsed by Sphinx) but within your python's docstring, the slashes need to be escaped ! ``:math:`\alpha``` should therefore be written ``:math:`\\alpha``` or put an "r" before the docstring  
+
+Note also, that you can easily include more complex mathematical expressions using the math directive::
+
+    .. math::
+
+        n_{\mathrm{offset}} = \sum_{k=0}^{N-1} s_k n_k
+
+Here is another:
+
+.. math:: n_{\mathrm{offset}} = \sum_{k=0}^{N-1} s_k n_k
+
+It seems that there is no limitations to LaTeX usage:
+
+.. math:: 
+
+    s_k^{\mathrm{column}} = \prod_{j=0}^{k-1} d_j , \quad  s_k^{\mathrm{row}} = \prod_{j=k+1}^{N-1} d_j .
+
+TODO extension
+=================
+
+
+Similarly to the note directive, one can include todo boxes bu it requires the `sphinx.ext.todo` extension to be added in the **conf.py** file by adding two lines of code::
+
+
+    extensions.append('sphinx.ext.todo')
+    todo_include_todos=True
+
+
+.. todo:: a todo box
+  
+
+copybutton
+==================
+
+When including Python code with the >>> signs, there is a nice extension called copybutton that allows to hide the signs hence make a copy/paste possible. I put this extension into the package **easydev**, available on Pypi website. I do not know the origin of this code so sorry if it's yours. If so, let me know so that I can add the author!copyright.
+
+So, if you add the easydev.extension into the configuration file ::
+
+    extensions.append('easydev.copybutton')
+    jscopybutton_path = easydev.copybutton.get_copybutton_path()
+
+    if os.path.isdir('_static')==False:
+        os.mkdir('_static')
+
+    import shutil
+    shutil.copy(jscopybutton_path, '_static')
+
+    html_static_path = ['_static']
+
+
+
+
+
+
 .. rubric:: Footnotes
 
 .. [#footnote1] this is a footnote aimed at illustrating the footnote capability.
@@ -898,3 +1036,5 @@ contents directives
 
 .. [CIT2002] A citation
       (as often used in journals).
+
+

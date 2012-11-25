@@ -1,13 +1,13 @@
 .. _docstring_python:
 
 
-How to document your Python docstrings
-#######################################
+Example on how to document your Python docstrings
+######################################################
 
 
 .. topic:: Overview
 
-    This example shows how to document your docstrings and how to interpret it within your reST document.
+    This example shows how to document your docstrings and how to interpret it within your RST document.
 
     :Date: |today|
     :Author: **Thomas Cokelaer**
@@ -15,28 +15,23 @@ How to document your Python docstrings
 
 .. module:: template
 
-Let us consider a python module :mod:`template` module.
-With Sphinx, you can auto-document this module by typing::
+Let us consider a python module called :mod:`template` (see bottom of the page).
+With Sphinx, you can auto-document this module by including the following code within a RST document::
 
 
-    .. automodule:: template.py
+    .. automodule:: template
         :members:
         :undoc-members:
         :inherited-members:
         :show-inheritance:
 
-.. warning :: make sure your modules are inside your PYTHONPATH otherwise Sphinx is not able to parse them.
+This code will scan the module template.py, find all its members, undocumented members and add their docstrings. It will also include documentation from inhereted classes (if any) and show the inheritance tree. 
+
+.. warning :: Your modules must be visible that is partof your PYTHONPATH variable otherwise Sphinx is not able to find them.
 
 
-The :mod:`template` module contains a class :class:`MainClass1` and its method :meth:`function1 <MainClass1.function1>`.
+There is a lot of tunable possibilities. For instance, you can include only some members if needed.
 
-Alternatively, if you do not want to auto document the entire module but only a class, you would proceed as follows::
-
-    .. autoclass:: template.MainClass1
-       :members: 
-       :undoc-members:
-       :inherited-members:
-       :show-inheritance:
 
 
 -----
@@ -44,7 +39,9 @@ Alternatively, if you do not want to auto document the entire module but only a 
 Auto documented class (method 1)
 --------------------------------
 
-.. autoclass:: MainClass1
+The previous code generates automatically the following documentation for the class MainClass1 contained in the module template.py
+
+.. automodule:: template
    :members: 
    :undoc-members:
    :inherited-members:

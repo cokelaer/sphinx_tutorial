@@ -2,8 +2,8 @@
 
 
 
-How to include test in your Python docstrings
-==============================================
+How to include test in your Python docstrings using doctest
+==============================================================
 
 .. topic:: Overview
 
@@ -16,7 +16,7 @@ How to include test in your Python docstrings
 
 quickstart
 -----------
-you may want to include test directly within your reSt documents or docstring as follows::
+you may want to include test directly within your RST documents or Python docstring as follows::
 
     .. doctest::
 
@@ -32,7 +32,7 @@ which will be displayed like that:
     >>> print math.sqrt(2.)
     1.41421356237
 
-and instead of compiling the HTML doc, type::
+You can check that the code included that way is correct: in the shell, instead of compiling the HTML doc, type::
 
     make doctest
 
@@ -45,8 +45,7 @@ an error occurs. This is why we put the results of square root 2 above.
 
 +SKIP option
 -------------
-Now, you may say that 
-you do not know the expecting result or do not care about it. In such case, add this comment:
+Now, you may say that you do not know the expecting result or do not care about it or it may be random. In such case, you ant to skip the correctness of the output. Add this comment:
 **#doctest: +SKIP**
     
 
@@ -68,15 +67,10 @@ What's happen here is that the first line is tested, the second one is ran but t
 If you want to skip all the commands (better to use a code-block directive in such case though), then type::
 
     .. doctest::
-               :options: +SKIP
+        :options: +SKIP
 
         >>> whatever code
 
 
-
-
-testsetup
-----------
-.. todo:: explain the testsetup
 
 
