@@ -5,7 +5,7 @@
 # -*- coding: utf-8 -*-
 #
 # documentation build configuration file, created by
-# sphinx-quickstart on Wed Dec  2 17:50:25 2009.
+# sphinx-quickstart on Wed Aug 10 16:58:13 2011.
 #
 # This file is execfile()d with the current directory set to its containing dir.
 #
@@ -17,18 +17,27 @@
 import os, sys
 
 ###########################ADDON############################
+try:
+    import easydev
+    from easydev import get_path_sphinx_themes
+except Exception, e:
+    print "Install easydev or set your PYTHONPATH properly"
+    raise Exception
+
+
+version = "0.9.1"
+release = "0.9"
+project_name = u'Sphinx and the RST syntax'
+copyright = 'Thomas Cokelaer'
+url = 'http://thomas-cokelaer.info/tutorials/sphinx/contents.html' 
+authors = 'Thomas Cokelaer'
+title = 'Sphinx and RST syntax guide'
+
+###########################ADDON############################
 
 os.sys.path.append(os.path.curdir)
-import init_sphinx
-assert hasattr(init_sphinx,'version')
-assert hasattr(init_sphinx,'authors')
-assert hasattr(init_sphinx,'project_name')
-assert hasattr(init_sphinx,'user_theme')
-assert hasattr(init_sphinx,'sphinx_themes_path')
-
-
-extensionPath = '.'
-sys.path.append(os.path.join(extensionPath,'sphinxext'))
+import os
+os.sys.path.append(os.path.curdir + os.sep + 'source')
 
 
 #NOTHING to change below in principle
@@ -40,6 +49,7 @@ sys.path.append(os.path.join(extensionPath,'sphinxext'))
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
+    'easydev.copybutton',
     'sphinx.ext.autodoc', 
     'sphinx.ext.autosummary', 
     'sphinx.ext.coverage', 
@@ -50,17 +60,18 @@ extensions = [
     'sphinx.ext.coverage', 
     'sphinx.ext.pngmath', 
     'sphinx.ext.ifconfig',
-    'sphinx.ext.inheritance_diagram',
-    #'sphinx.ext.viewcode',
-    'numpyext.only_directives',
+    #'sphinx.ext.inheritance_diagram',
+    'matplotlib.sphinxext.only_directives',
     'matplotlib.sphinxext.plot_directive',
-    #'numpyext.numpydoc',
-    #'numpyext.plot_directive',
     ]
 # note that the numpy directives is buggy. Example: class and init are not recognised as two entities for the autoclass_content=both here below
 
 
 todo_include_todos=True
+jscopybutton_path = easydev.copybutton.get_copybutton_path()
+
+
+
 inheritance_node_attrs = dict(shape='ellipse', fontsize=14, height=0.75,
                               color='dodgerblue1', style='filled')
 
@@ -70,24 +81,24 @@ autoclass_content = 'both'
 
 
 # Add any paths that contain templates here, relative to this directory.
-#templates_path = [ '_templates']
+templates_path = ['_templates']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
 
 # The encoding of source files.
-#source_encoding = 'utf-8'
+#source_encoding = 'utf-8-sig'
 
 # The master toctree document.
 master_doc = 'contents'
 
 # General information about the project.
-project = init_sphinx.project_name
-copyright = init_sphinx.copyright
+project = project_name
+copyright = copyright
 #url = init_sphinx.u'rl
-authors = init_sphinx.authors
+authors = authors
 # The short X.Y version.
-version = init_sphinx.version
+version = version
 # The full version, including alpha/beta/rc tags.
 release = ".".join(version.split('.')[0:2])
 
@@ -134,40 +145,46 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  Major themes that come with
 # Sphinx are currently 'default' and 'sphinxdoc'.
-html_theme = init_sphinx.user_theme
+html_theme = "standard"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 # the user theme contains the otpions 'homepage', which is populated here
-html_theme_options = {'homepage': init_sphinx.url}
+html_theme_options = {'homepage': url}
 
 # Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = init_sphinx.sphinx_themes_path
+html_theme_path = [get_path_sphinx_themes()]
 
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = init_sphinx.title + ' ('+version +')'
+html_title = title + ' ('+version +')'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-html_short_title = init_sphinx.project_name
+html_short_title = project_name
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-#html_logo = os.path.join(openalea, 'images', 'wiki_logo_openalea.png')
-
+#html_logo = None
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-#html_favicon = os.path.join(openalea, 'images', 'oaicon.ico')
+#html_favicon = None
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-#html_static_path = ['_static', os.path.join(extensionPath, '_static')]
-#html_style = 'mine.css'
+
+if os.path.isdir('_static')==False:
+    os.mkdir('_static')
+
+import shutil
+shutil.copy(jscopybutton_path, '_static')
+
+html_static_path = ['_static']
+
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
 html_last_updated_fmt = '%b %d, %Y'
@@ -204,6 +221,7 @@ html_split_index = False
 #html_show_sourcelink = True
 #html_copy_source = False
 
+
 # If true, an OpenSearch description file will be output, and all pages will
 # contain a <link> tag referring to it.  The value of this option must be the
 # base URL from which the finished HTML is served.
@@ -213,13 +231,13 @@ html_split_index = False
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-#htmlhelp_basename = 'to be done'
+htmlhelp_basename = 'doc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
 
 # NOT in original quickstart
-pngmath_use_preview = True
+#pngmath_use_preview = True
 
 # The paper size ('letter' or 'a4').
 latex_paper_size = 'a4'
@@ -230,26 +248,33 @@ latex_font_size = '10pt'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'main.tex', u'Documentation',
-   u'username from metainfo.ini', 'manual'),
+  ('index', 'main.tex', title,
+   authors, 'manual'),
 ]
 
 latex_elements = { 'inputenc': '\\usepackage[utf8]{inputenc}' }
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-#latex_logo = 
+#latex_logo = None
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.
 #latex_use_parts = False
+# If true, show page references after internal links.
+#latex_show_pagerefs = False
+
+# If true, show URL addresses after external links.
+#latex_show_urls = False
 
 # Additional stuff for the LaTeX preamble.
-latex_preamble = """
-   \usepackage{amsmath}
-   \usepackage{amsfonts}
-   \usepackage{amssymb}
-   \usepackage{txfonts}"""
+#latex_preamble =r"""
+#% \usepackage{amsmath}
+#% \usepackage{amsfonts}
+#% \usepackage{amssymb}
+#% \usepackage{txfonts}
+#
+#"""
 
 # Documents to append as an appendix to all manuals.
 #latex_appendices = []
@@ -258,7 +283,15 @@ latex_preamble = """
 #latex_use_modindex = True
 
 
-# Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'http://docs.python.org/': None, 
-                    }
+# -- Options for manual page output --------------------------------------------
 
+# One entry per manual page. List of tuples
+# (source start file, name, description, authors, manual section).
+man_pages = [
+    ('index', project, project,
+     [authors], 1)
+]
+
+
+# Example configuration for intersphinx: refer to the Python standard library.
+intersphinx_mapping = {'http://docs.python.org/': None}
