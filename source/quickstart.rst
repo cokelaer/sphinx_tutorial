@@ -6,17 +6,16 @@ QuickStart
 Installation
 -------------
 
-Before starting, you first need to install Sphinx, which is done very easily using **easy_install** in a command shell::
+Before starting, you first need to install Sphinx, which is done very easily using **easy_install** or **pip** command in a command shell::
 
-    easy_install -U sphinx
+    pip install sphinx --upgrade
 
-.. note:: The -U is used to make sure that you update the version you have (if already installed)
-
-.. note:: Most Linux distribution provide sphinx in their repository therefore if easy_install does not work, you may try yum (Fedora) or apt-get (ubuntu).
+.. note:: Most Linux distributions provide sphinx in their repository therefore if easy_install (or pip) does not work, you may try yum (Fedora) or apt-get (ubuntu).
 
 
 Create your own sphinx project
-------------------------------
+--------------------------------
+
 Once **sphinx** is installed, you can start a new sphinx project. In a shell, type::
 
     sphinx-quickstart
@@ -24,19 +23,19 @@ Once **sphinx** is installed, you can start a new sphinx project. In a shell, ty
 and follow the instructions. Most of the time you simply need to press enter. 
 
 
-However, you will have to enter the project name, your name, the version (put 1 if you don't know) and select the extension that you will need later on. If you do not know, select *yes* to all (note that jsmath raised an error on my version). 
+However, you will have to enter the project name, your name, the version (put 1 if you don't know) and select the extension that you will need later on (.txt or .rst to your conveninence but I would recommend rst). If you do not know, select *yes* to all (note that jsmath raised an error on my distributution). 
 
 .. note:: this is a basic setup. All options will be stored in a file called **conf.py**, which can be edited at any time later on.
 
 In principle you should now have a file called **conf.py**, a file called **index.rst** (or contents.rst) and some directories.
 
 
-The **conf.py** file can be edited if you know what you are doing so as to add new extensions, additional html pages, ...
+The **conf.py** file can be edited if you know what you are doing so as to add new extensions, additional html pages, change the authors or version and much more. Here below is the beginning of the conf.py file used to create this documentation:
 
 .. literalinclude:: conf.py
     :linenos:
     :language: python
-    :lines: 1-15
+    :lines: 1-30
 
 The file **index.rst** is your entry point. Change it to your need.
 
@@ -58,7 +57,7 @@ and under windows, type::
     make.bat html
 
 
-This command will analyse the files in the source/ directory and create the HTML files into the directory **_build/html/**  or  **build/html** depending on your configuratio file.
+This command will analyse the files in the source/ directory and create the HTML files into the directory **_build/html/**  or  **build/html** depending on your configuration file.
 
 
 

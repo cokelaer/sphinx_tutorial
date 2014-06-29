@@ -25,9 +25,9 @@ except Exception, e:
     raise Exception
 
 
-version = "0.9.1"
+version = "0.9.3"
 release = "0.9"
-project_name = u'Sphinx and the RST syntax'
+project = u'Sphinx and the RST syntax'
 copyright = 'Thomas Cokelaer'
 url = 'http://thomas-cokelaer.info/tutorials/sphinx/contents.html' 
 authors = 'Thomas Cokelaer'
@@ -49,26 +49,26 @@ os.sys.path.append(os.path.curdir + os.sep + 'source')
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
-    'easydev.copybutton',
-    'sphinx.ext.autodoc', 
-    'sphinx.ext.autosummary', 
-    'sphinx.ext.coverage', 
+    'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.coverage',
     'sphinx.ext.graphviz',
-    'sphinx.ext.doctest', 
-    'sphinx.ext.intersphinx', 
-    'sphinx.ext.todo', 
-    'sphinx.ext.coverage', 
-    'sphinx.ext.pngmath', 
+    'sphinx.ext.doctest',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
+    'sphinx.ext.coverage',
     'sphinx.ext.ifconfig',
-    #'sphinx.ext.inheritance_diagram',
-    'matplotlib.sphinxext.only_directives',
+    'sphinx.ext.viewcode',
+    'easydev.copybutton',
     'matplotlib.sphinxext.plot_directive',
+    'matplotlib.sphinxext.only_directives',
+    'sphinx.ext.pngmath',
     ]
 # note that the numpy directives is buggy. Example: class and init are not recognised as two entities for the autoclass_content=both here below
 
 
 todo_include_todos=True
-jscopybutton_path = easydev.copybutton.get_copybutton_path()
+jscopybutton_path = "copybutton.js"
 
 
 
@@ -76,9 +76,8 @@ inheritance_node_attrs = dict(shape='ellipse', fontsize=14, height=0.75,
                               color='dodgerblue1', style='filled')
 
 
-#to have the docstring of the class and its init method
-autoclass_content = 'both'
 
+autoclass_content = 'both'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -90,10 +89,10 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'contents'
+master_doc = 'index'
 
 # General information about the project.
-project = project_name
+project = project
 copyright = copyright
 #url = init_sphinx.u'rl
 authors = authors
@@ -116,6 +115,7 @@ release = ".".join(version.split('.')[0:2])
 # List of documents that shouldn't be included in the build.
 #unused_docs = []
 
+include_source = False
 # List of directories, relative to source directory, that shouldn't be searched
 # for source files.
 exclude_trees = ['_build']
@@ -162,7 +162,7 @@ html_theme_path = [get_path_sphinx_themes()]
 html_title = title + ' ('+version +')'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-html_short_title = project_name
+html_short_title = project
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
@@ -177,12 +177,7 @@ html_short_title = project_name
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 
-if os.path.isdir('_static')==False:
-    os.mkdir('_static')
-
-import shutil
-shutil.copy(jscopybutton_path, '_static')
-
+# the copybutton.js must be copied there: 
 html_static_path = ['_static']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
@@ -200,12 +195,10 @@ html_index = 'index.html'
 html_sidebars = {
                     'index': [ 'indexsidebar.html'], 
                     'contents':'indexsidebar.html',
-
-
 }
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
-html_additional_pages = {   'index': 'index.html'}
+#html_additional_pages = {   'index': 'index.html'}
 
 
 # If false, no module index is generated.

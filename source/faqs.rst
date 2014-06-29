@@ -7,7 +7,7 @@ The link do not appear correctly when using :class: directive
 
 The class you try to reference is not included in any of your rst files. 
 
-For instance, if you try to access the class *square*  in the module *math*, then you need somewhere to have::
+For instance, if you try to access the class *square*  in the module *math*, which is a standard python module, you still need somewhere to have that module included with e.g. the automodule command::
 
     .. automodule:: math
 
@@ -35,7 +35,7 @@ This is not satisfactory because the name is not great. So, you can replace it a
     :ref:`nicer reference <How_to_create_an_internal_reference>`
 
     
-which render indeed nicer: :ref:`nicer reference <How_to_create_an_internal_reference>`
+which renders as follows :ref:`nicer reference <How_to_create_an_internal_reference>`
 
 
 Get section numbers

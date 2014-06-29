@@ -36,7 +36,7 @@ You can check that the code included that way is correct: in the shell, instead 
 
     make doctest
 
-See ` <http://docs.python.org/library/doctest.html>`_ for a complete description
+See `<http://docs.python.org/library/doctest.html>`_ for a complete description.
 
 Analysing the code above, the '>>>' sign means `run the command that follows`. 
 If a command returns a value then the next line must contain the expected results otherwise 
