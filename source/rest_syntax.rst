@@ -1025,7 +1025,9 @@ So, if you add the easydev.extension into the configuration file ::
 
 
 
+Then, you can add a block code (using the >>> signs) and you should see a clickable set of characters (>>>) in the top right corner to swith on/off the >>> signs::
 
+    >>> a=1
 
 
 .. rubric:: Footnotes
