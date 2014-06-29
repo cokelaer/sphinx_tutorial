@@ -1,4 +1,4 @@
-Sphinx Course: this project is intented to provide a summary
+Sphinx Tutorial: this project is intented to provide a summary
 of RST and Sphinx (http://sphinx.pocoo.org) syntaxes.
 
 Project author(s): Thomas Cokelaer <cokelaer at gmail dot com>
@@ -8,9 +8,14 @@ See accompanying file LICENSE.txt
 
 WebSite: http://thomas-cokelaer.info/tutorials/sphinx/contents.html
 
-Copyright 2010-2011
+Copyright 2010-2014
 ######################################################################
 
 
-To compile the documenation, you need Sphinx version 1.0.7 or greater, 
-extensions from pylab, numpy. Type make html.
+To compile the documentation, you need some python packages, which can be installed with pip::
+
+    pip install sphinx, numpy, pylab, easydev
+
+Then, ::
+
+    make html.
