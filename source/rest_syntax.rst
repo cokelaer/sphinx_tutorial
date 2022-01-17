@@ -228,7 +228,7 @@ Inserting code and Literal blocks
 How to include simple code
 ===================================
 
-This easiest way to insert literal code blocks is to end a paragraph with the special marker made of a double coulumn `::`. Then, the literal block must be indented:: 
+This easiest way to insert literal code blocks is to end a paragraph with the special marker made of a double column `::`. Then, the literal block must be indented:: 
 
     This is a simple example::
 
